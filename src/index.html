@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Element Connect</title>
+        <link href="css/base.css" rel="stylesheet" type="text/css">
+        <link href="css/game.css" rel="stylesheet" type="text/css">
+        <script src="js/page/game.js" type="module" defer></script>
+        <script src="js/components/config.js" type="module" defer></script>
+        <script src="js/components/position.js" type="module" defer></script>
+        <script src="js/components/board.js" type="module" defer></script>
+        <script src="js/components/element-connect.js" type="module" defer></script>
+    </head>
+    <body>
+        <div class="p-game__button-container">
+            <button class="js-game__start-button">start</button>
+            <button class="js-game__rotate-left-button">┌</button>
+            <button class="js-game__rotate-right-button">┐</button>
+            <button class="js-game__move-left-button">←</button>
+            <button class="js-game__move-right-button">→</button>
+            <button class="js-game__move-down-button">↓</button>
+            <button class="js-game__step-button">step</button>
+        </div>
+        <div class="p-game__stage js-game__stage"></div>
+    </body>
+</html>
