@@ -11,17 +11,26 @@
         <script src="js/components/position.js" type="module" defer></script>
         <script src="js/components/board.js" type="module" defer></script>
         <script src="js/components/element-connect.js" type="module" defer></script>
+        <script src="js/renderer/base.js" type="module" defer></script>
+        <script src="js/renderer/html-renderer.js" type="module" defer></script>
     </head>
     <body>
+        <div class="p-game__stage-container">
+            <div class="p-game__stage js-game__stage"></div>
+        </div>
         <div class="p-game__button-container">
             <button class="js-game__start-button">start</button>
-            <button class="js-game__rotate-left-button">┌</button>
-            <button class="js-game__rotate-right-button">┐</button>
-            <button class="js-game__move-left-button">←</button>
-            <button class="js-game__move-right-button">→</button>
-            <button class="js-game__move-down-button">↓</button>
-            <button class="js-game__step-button">step</button>
+            <button class="js-game__stop-button">stop</button>
+            <button class="js-game__button" data-operation="rotateRight">┌</button>
+            <button class="js-game__button" data-operation="rotateLeft">┐</button>
+            <button class="js-game__button" data-operation="moveLeft">←</button>
+            <button class="js-game__button" data-operation="moveRight">→</button>
+            <button class="js-game__button" data-operation="moveDown">↓</button>
         </div>
-        <div class="p-game__stage js-game__stage"></div>
+        <div class="p-game__image-container">
+            <img src="images/hydrogen.png" id="id-image__hydrogen">
+            <img src="images/oxygen.png" id="id-image__oxygen">
+            <img src="images/carbon.png" id="id-image__carbon">
+        </div>
     </body>
 </html>

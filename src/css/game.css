@@ -1,14 +1,36 @@
-.p-game__button-container {
-    position: absolute;
+:root {
+    --button-container-height: 50px;
+    --stage-width: calc(min(100vw, calc(100vh * 9 / 16)) - 20px);
+    --stage-height: calc(min(100vh, calc(100vw * 16 / 9)) - 20px - var(--button-container-height));
 }
 
-.p-game__stage {
+.p-game__stage-container {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: calc(min(100vw, calc(100vh * 9 / 16)) - 20px);
-    height: calc(min(100vh, calc(100vw * 16 / 9)) - 20px);
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-    background-color: #d9f8d1;
-    transform: translate(-50%, -50%);
+    top: 0;
+    right: 0;
+    bottom: var(--button-container-height);
+    left: 0;
+
+    .p-game__stage {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: var(--stage-width);
+        height: var(--stage-height);
+        font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+        background-color: #d9f8d1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.p-game__button-container {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: var(--button-container-height);
+}
+
+.p-game__image-container {
+    display: none;
 }
