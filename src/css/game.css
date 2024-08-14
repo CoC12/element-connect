@@ -1,5 +1,6 @@
 :root {
     --button-container-height: 50px;
+    --button-height: 40px;
     --stage-width: calc(min(100vw, calc(100vh * 9 / 16)) - 20px);
     --stage-height: calc(min(100vh, calc(100vw * 16 / 9)) - 20px - var(--button-container-height));
 }
@@ -23,12 +24,38 @@
     }
 }
 
-.p-game__button-container {
+.p-game__footer {
     position: absolute;
     right: 0;
     bottom: 0;
     left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: var(--button-container-height);
+
+    .p-game__button-container {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);;
+        gap: 10px;
+        width: var(--stage-width);
+
+        .p-game__button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: var(--button-height);
+            cursor: pointer;
+            user-select: none;
+            background: #fff100;
+            border: 2px solid #000000;
+            border-radius: 5px;
+
+            &:hover {
+                background: #ffdd00;
+            }
+        }
+    }
 }
 
 .p-game__image-container {
