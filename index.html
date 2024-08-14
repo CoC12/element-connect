@@ -11,17 +11,42 @@
         <script src="js/components/position.js" type="module" defer></script>
         <script src="js/components/board.js" type="module" defer></script>
         <script src="js/components/element-connect.js" type="module" defer></script>
+        <script src="js/renderer/base.js" type="module" defer></script>
+        <script src="js/renderer/html-renderer.js" type="module" defer></script>
     </head>
     <body>
-        <div class="p-game__button-container">
-            <button class="js-game__start-button">start</button>
-            <button class="js-game__rotate-left-button">┌</button>
-            <button class="js-game__rotate-right-button">┐</button>
-            <button class="js-game__move-left-button">←</button>
-            <button class="js-game__move-right-button">→</button>
-            <button class="js-game__move-down-button">↓</button>
-            <button class="js-game__step-button">step</button>
+        <div class="p-game__stage-container">
+            <div class="p-game__stage js-game__stage"></div>
         </div>
-        <div class="p-game__stage js-game__stage"></div>
+        <div class="p-game__footer">
+            <div class="p-game__button-container">
+                <div class="p-game__button js-game__start-button">
+                    <strong>start</strong>
+                </div>
+                <div class="p-game__button js-game__stop-button">
+                    <strong>stop</strong>
+                </div>
+                <div class="p-game__button js-game__button" data-operation="rotateRight">
+                    <img src="icons/rotate_right.svg" width="24" height="24">
+                </div>
+                <div class="p-game__button js-game__button" data-operation="moveLeft">
+                    <img src="icons/move_left.svg" width="24" height="24">
+                </div>
+                <div class="p-game__button js-game__button" data-operation="moveDown">
+                    <img src="icons/move_down.svg" width="24" height="24">
+                </div>
+                <div class="p-game__button js-game__button" data-operation="moveRight">
+                    <img src="icons/move_right.svg" width="24" height="24">
+                </div>
+                <div class="p-game__button js-game__button" data-operation="rotateLeft">
+                    <img src="icons/rotate_left.svg" width="24" height="24">
+                </div>
+            </div>
+        </div>
+        <div class="p-game__image-container">
+            <img src="images/hydrogen.png" id="id-image__hydrogen">
+            <img src="images/oxygen.png" id="id-image__oxygen">
+            <img src="images/carbon.png" id="id-image__carbon">
+        </div>
     </body>
 </html>
