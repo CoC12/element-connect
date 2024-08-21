@@ -15,7 +15,11 @@ export class HtmlRenderer extends BaseRenderer {
         this.stageElement = document.querySelector('.js-game__stage');
         this.hydrogen_image = document.getElementById('id-image__hydrogen');
         this.carbon_image = document.getElementById('id-image__carbon');
+        this.nitrogen_image = document.getElementById('id-image__nitrogen');
         this.oxygen_image = document.getElementById('id-image__oxygen');
+        this.sodium_image = document.getElementById('id-image__sodium');
+        this.sulfur_image = document.getElementById('id-image__sulfur');
+        this.chlorine_image = document.getElementById('id-image__chlorine');
 
         this.#setupButton();
         this.#setupKeyboard();
@@ -116,8 +120,16 @@ export class HtmlRenderer extends BaseRenderer {
                 return this.hydrogen_image.cloneNode();
             case Element.CARBON:
                 return this.carbon_image.cloneNode();
+            case Element.NITROGEN:
+                return this.nitrogen_image.cloneNode();
             case Element.OXYGEN:
                 return this.oxygen_image.cloneNode();
+            case Element.SODIUM:
+                return this.sodium_image.cloneNode();
+            case Element.SULFUR:
+                return this.sulfur_image.cloneNode();
+            case Element.CHLORINE:
+                return this.chlorine_image.cloneNode();
             default:
                 throw new Error(`Unknown element: ${element}`);
         }
