@@ -6,6 +6,7 @@
         <title>Element Connect</title>
         <link href="css/base.css" rel="stylesheet" type="text/css">
         <link href="css/game.css" rel="stylesheet" type="text/css">
+        <script src="js/services/menu-dialog.js" type="text/javascript" defer></script>
         <script src="js/page/game.js" type="module" defer></script>
         <script src="js/components/config.js" type="module" defer></script>
         <script src="js/components/position.js" type="module" defer></script>
@@ -17,11 +18,11 @@
     <body>
         <div class="p-game__root p-game__header">
             <div class="p-game__menu-container">
-                <div class="p-game__button p-game__start-button js-game__start-button">
-                    <strong>start</strong>
+                <div class="p-game__score">
+                    <strong>Score: XXXXX</strong>
                 </div>
-                <div class="p-game__button p-game__menu-button js-game__stop-button">
-                    <strong>stop</strong>
+                <div class="p-game__button p-game__menu-button js-game__stop-button js-menu-dialog__open-trigger">
+                    <img src="icons/menu.svg" width="24" height="24">
                 </div>
             </div>
         </div>
@@ -59,6 +60,13 @@
                     data-operation="rotateLeft"
                 >
                     <img src="icons/rotate_left.svg" width="24" height="24">
+                </div>
+            </div>
+        </div>
+        <div class="p-game__menu-dialog-container js-menu-dialog__container">
+            <div class="p-game__menu-dialog">
+                <div class="p-game__button p-game__menu-dialog-button js-game__start-button js-menu-dialog__close-trigger">
+                    <strong>start</strong>
                 </div>
             </div>
         </div>
