@@ -3,6 +3,7 @@
     --footer-height: 70px;
     --action-button-height: 60px;
     --menu-button-height: 60px;
+    --dialog-button-height: 40px;
 
     --stage-margin: 30px;
     --stage-width: calc(
@@ -15,6 +16,8 @@
         - var(--header-height)
         - var(--footer-height)
     );
+
+    --z-index-dialog: 1000;
 }
 
 .p-game__button {
@@ -64,7 +67,7 @@
     width: var(--stage-width);
     height: 100%;
 
-    .p-game__start-button {
+    .p-game__score {
         grid-row: 1 / 2;
         grid-column: 1 / 5;
         height: var(--menu-button-height);
@@ -95,6 +98,33 @@
 
     .p-game__action-button {
         height: var(--action-button-height);
+    }
+}
+
+.p-game__menu-dialog-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: var(--z-index-dialog);
+    background-color: rgba(0, 0, 0, 0.5);
+
+    .p-game__menu-dialog {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: calc(var(--stage-width) * 0.8);
+        padding: 20px;
+        background-color: #ffffff;
+        border: 2px solid #000000;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        transform: translate(-50%, -50%);
+
+        .p-game__menu-dialog-button {
+            height: var(--dialog-button-height);
+        }
     }
 }
 
