@@ -1,60 +1,100 @@
 :root {
-    --button-container-height: 50px;
-    --button-height: 40px;
-    --stage-width: calc(min(100vw, calc(100vh * 9 / 16)) - 20px);
-    --stage-height: calc(min(100vh, calc(100vw * 16 / 9)) - 20px - var(--button-container-height));
+    --header-height: 70px;
+    --footer-height: 70px;
+    --action-button-height: 60px;
+    --menu-button-height: 60px;
+
+    --stage-margin: 30px;
+    --stage-width: calc(
+        min(100vw, calc(100vh * 9 / 16))
+        - var(--stage-margin)
+    );
+    --stage-height: calc(
+        min(100vh, calc(100vw * 16 / 9))
+        - var(--stage-margin)
+        - var(--header-height)
+        - var(--footer-height)
+    );
 }
 
-.p-game__stage-container {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: var(--button-container-height);
-    left: 0;
+.p-game__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    background: #fff100;
+    border: 2px solid #000000;
+    border-radius: 5px;
 
-    .p-game__stage {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: var(--stage-width);
-        height: var(--stage-height);
-        font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-        background-color: #d9f8d1;
-        transform: translate(-50%, -50%);
+    &:hover {
+        background: #ffdd00;
     }
 }
 
-.p-game__footer {
+.p-game__root {
     position: absolute;
     right: 0;
-    bottom: 0;
     left: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: var(--button-container-height);
 
-    .p-game__button-container {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);;
-        gap: 10px;
-        width: var(--stage-width);
+    &.p-game__header {
+        top: 0;
+        height: var(--header-height);
+    }
 
-        .p-game__button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: var(--button-height);
-            cursor: pointer;
-            user-select: none;
-            background: #fff100;
-            border: 2px solid #000000;
-            border-radius: 5px;
+    &.p-game__main {
+        top: var(--header-height);
+        bottom: var(--footer-height);
+    }
 
-            &:hover {
-                background: #ffdd00;
-            }
-        }
+    &.p-game__footer {
+        bottom: 0;
+        height: var(--footer-height);
+    }
+}
+
+.p-game__menu-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);;
+    gap: 10px;
+    align-items: end;
+    width: var(--stage-width);
+    height: 100%;
+
+    .p-game__start-button {
+        grid-row: 1 / 2;
+        grid-column: 1 / 5;
+        height: var(--menu-button-height);
+    }
+
+    .p-game__menu-button {
+        height: var(--menu-button-height);
+    }
+}
+
+.p-game__stage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--stage-width);
+    height: var(--stage-height);
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    background-color: #d9f8d1;
+    transform: translate(-50%, -50%);
+}
+
+.p-game__action-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);;
+    gap: 10px;
+    width: var(--stage-width);
+    height: 100%;
+
+    .p-game__action-button {
+        height: var(--action-button-height);
     }
 }
 
