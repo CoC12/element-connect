@@ -13,6 +13,8 @@ export class HtmlRenderer extends BaseRenderer {
     constructor(elementConnect) {
         super(elementConnect);
         this.stageElement = document.querySelector('.js-game__stage');
+        this.scoreElement = document.querySelector('.js-game__score');
+
         this.hydrogen_image = document.getElementById('id-image__hydrogen');
         this.carbon_image = document.getElementById('id-image__carbon');
         this.nitrogen_image = document.getElementById('id-image__nitrogen');
@@ -29,6 +31,7 @@ export class HtmlRenderer extends BaseRenderer {
      * ゲームを描画する。
      */
     render() {
+        // 盤面
         this.stageElement.innerHTML = '';
         this.elementConnect.board.board.forEach(row => {
             const width = `calc(var(--stage-width) / ${Config.stageCols})`;
@@ -53,6 +56,8 @@ export class HtmlRenderer extends BaseRenderer {
             });
             this.stageElement.appendChild(rowHtmlElement);
         });
+        // スコア
+        this.scoreElement.textContent = this.elementConnect.score;
     }
 
     /**
