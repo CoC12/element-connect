@@ -1,5 +1,5 @@
 import { Config } from '../components/config.js';
-import { Element, elementKeys, substancePatterns } from '../components/element.js';
+import { Element, elementKeys, substances } from '../components/element.js';
 import { Direction, Position, isHorizontal } from '../components/position.js';
 import { Board } from '../components/board.js';
 
@@ -29,6 +29,8 @@ export class ElementConnect {
 
         this.state = State.FALLING_BEFORE;
         this.tick = 0;
+
+        this._score = 0.0;
     }
 
     /**
@@ -103,10 +105,19 @@ export class ElementConnect {
      * 落下中の Element を最下部まで落下させる。
      */
     moveDown() {
-        if (!this.#isAllowedMove) {
+        if (this.fallingElements.length === 0) {
             return;
         }
-        this.board.shiftDown();
+
+        const positionMapping = this.board.shiftDown();
+        this.fallingElements.forEach((position) => {
+            const newPosition = positionMapping[position];
+            if (!newPosition) {
+                return;
+            }
+            this._score += (newPosition.y - position.y) * Config.scorePerMoveDown;
+        });
+
         this.fallingElements.clear();
         this.state = State.CONNECT;
     }
@@ -133,6 +144,8 @@ export class ElementConnect {
      * State.FALLING のイベントハンドラ
      */
     #onFalling() {
+        this._score += Config.scorePerTick;
+
         this.fallingElements.forEach((position) => {
             const newPosition = position.down;
             const isValidMove = this.board.isValidMove(newPosition);
@@ -152,37 +165,19 @@ export class ElementConnect {
      */
     #onConnect() {
         let isConnected = false;
-        substancePatterns.forEach((pattern) => {
-            const patternRows = pattern.length;
-            const patternCols = pattern[0].length;
-            for (let y = 0; y < this.stageRows - patternRows + 1; y++) {
-                for (let x = 0; x < this.stageCols - patternCols + 1; x++) {
-                    let isMatch = true;
-                    const substancePositions = [];
-                    pattern_loop:
-                        for (let i = 0; i < patternRows; i++) {
-                            for (let j = 0; j < patternCols; j++) {
-                                const patternElement = pattern[i][j];
-                                if (patternElement === null) {
-                                    continue;
-                                }
-                                const position = new Position(x + j, y + i);
-                                const boardElement = this.board.getElement(position);
-                                if (patternElement !== boardElement) {
-                                    isMatch = false;
-                                    continue pattern_loop;
-                                }
-                                substancePositions.push(position);
-                            }
+        substances.forEach((substance) => {
+            substance.patterns.forEach((pattern) => {
+                for (let y = 0; y < this.stageRows - pattern.rows + 1; y++) {
+                    for (let x = 0; x < this.stageCols - pattern.cols + 1; x++) {
+                        const isRemoved = this.board.removePattern(x, y, pattern);
+                        if (!isRemoved) {
+                            continue;
                         }
-                    if (isMatch) {
-                        substancePositions.forEach((position) => {
-                            this.board.setElement(position, null);
-                        });
                         isConnected = true;
+                        this._score += substance.score;
                     }
                 }
-            };
+            });
         });
         if (isConnected) {
             this.state = State.SHIFT_DOWN;
@@ -197,6 +192,13 @@ export class ElementConnect {
     #onShiftDown() {
         this.board.shiftDown();
         this.state = State.CONNECT;
+    }
+
+    /**
+     * 現在のスコアを返す。
+     */
+    get score() {
+        return Math.floor(this._score);
     }
 
     /**

@@ -1,5 +1,5 @@
 import { Position } from '../components/position.js';
-import { Element } from '../components/element.js';
+import { Element, Pattern } from '../components/element.js';
 
 
 /**
@@ -49,8 +49,10 @@ export class Board {
 
     /**
      * 盤面上の Element オブジェクトを最下部に詰めて移動する。
+     * @returns {Object<Position, Position>} { 移動元の Position オブジェクト: 移動先の Position オブジェクト } 形式
      */
     shiftDown() {
+        const result = {};
         for (let x = 0; x < this.cols; x++) {
             for (let y = this.rows - 1; y >= 0; y--) {
                 const position = new Position(x, y);
@@ -67,8 +69,10 @@ export class Board {
                     }
                 }
                 this.moveElement(position, newPosition.up);
+                result[position] = newPosition;
             }
         }
+        return result;
     }
 
     /**
@@ -90,6 +94,35 @@ export class Board {
             (0 <= position.x && position.x < this.cols)
             && (0 <= position.y && position.y < this.rows)
         );
+    }
+
+    /**
+     * 盤面の指定した位置がパターンに一致する場合、盤面から取り除く。
+     * @param {number} x 起点となる x 座標
+     * @param {number} y 起点となる y 座標
+     * @param {Pattern} pattern 判定する Pattern オブジェクト
+     * @returns {boolean} パターンに一致し、盤面から取り除かれた場合、true
+     */
+    removePattern(x, y, pattern) {
+        const substancePositions = [];
+        for (let i = 0; i < pattern.rows; i++) {
+            for (let j = 0; j < pattern.cols; j++) {
+                const patternElement = pattern.pattern[i][j];
+                if (patternElement === null) {
+                    continue;
+                }
+                const position = new Position(x + j, y + i);
+                const boardElement = this.getElement(position);
+                if (patternElement !== boardElement) {
+                    return false;
+                }
+                substancePositions.push(position);
+            }
+        }
+        substancePositions.forEach((position) => {
+            this.setElement(position, null);
+        });
+        return true;
     }
 
     /**
