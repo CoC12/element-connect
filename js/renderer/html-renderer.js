@@ -14,6 +14,7 @@ export class HtmlRenderer extends BaseRenderer {
         super(elementConnect);
         this.stageElement = document.querySelector('.js-game__stage');
         this.scoreElement = document.querySelector('.js-game__score');
+        this.elementConnectDialog = document.querySelector('.js-game__element-connect-dialog');
 
         this.hydrogen_image = document.getElementById('id-image__hydrogen');
         this.carbon_image = document.getElementById('id-image__carbon');
@@ -58,6 +59,29 @@ export class HtmlRenderer extends BaseRenderer {
         });
         // スコア
         this.scoreElement.textContent = this.elementConnect.score;
+    }
+
+    /**
+     * ゲームを進める。
+     * @param {DOMHighResTimeStamp} timestamp 現在のタイムスタンプ
+     */
+    async tick(timestamp) {
+        const connectedElements = this.elementConnect.popConnectedElements();
+        if (connectedElements.length > 0) {
+            const elementConnectText = connectedElements.map(substance => {
+                return `<div>${substance.name} (${substance.formula})</div>`;
+            }).join('');
+            document.querySelector('.js-game__element-connect-text').innerHTML = elementConnectText;
+
+            this.elementConnectDialog.classList.add('p-game__dialog-open');
+            await new Promise(resolve => setTimeout(resolve, Config.elementConnectInterval))
+            this.elementConnectDialog.classList.remove('p-game__dialog-open');
+
+            this.timestamp = performance.now();
+            requestAnimationFrame(this.tick.bind(this));
+            return;
+        }
+        super.tick(timestamp);
     }
 
     /**

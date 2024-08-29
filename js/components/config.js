@@ -17,6 +17,8 @@ export class Config {
 
     // game config
     static tickInterval = 500;
+    static elementConnectInterval = 1000;
+
     static scorePerTick = 0.35;
     static scorePerMoveDown = 0.45;
 }
