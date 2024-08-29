@@ -26,6 +26,7 @@ export class ElementConnect {
         this.stageRows = Config.stageRows + Config.additionalRows;
         this.board = new Board(this.stageCols, this.stageRows);
         this.fallingElements = new FallingElements();
+        this._connectedElement = [];
 
         this.state = State.FALLING_BEFORE;
         this.tick = 0;
@@ -123,6 +124,16 @@ export class ElementConnect {
     }
 
     /**
+     * 作成された分子の情報を返し、クリアする。
+     * @returns {Array<object>} 作成された分子の情報
+     */
+    popConnectedElements() {
+        const connectedElements = this._connectedElement;
+        this._connectedElement = [];
+        return connectedElements;
+    }
+
+    /**
      * State.FALLING_BEFORE のイベントハンドラ
      */
     #onFallingBefore() {
@@ -175,6 +186,7 @@ export class ElementConnect {
                         }
                         isConnected = true;
                         this._score += substance.score;
+                        this._connectedElement.push(substance);
                     }
                 }
             });

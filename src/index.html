@@ -21,7 +21,10 @@
                 <div class="p-game__score">
                     <strong>Score: <span class="js-game__score"></span></strong>
                 </div>
-                <div class="p-game__button p-game__menu-button js-game__stop-button js-menu-dialog__open-trigger">
+                <div
+                    class="p-game__button p-game__menu-button js-game__stop-button js-dialog__open-trigger"
+                    data-dialog-target="id-game__dialog-container"
+                >
                     <img src="icons/menu.svg" width="24" height="24">
                 </div>
             </div>
@@ -63,11 +66,19 @@
                 </div>
             </div>
         </div>
-        <div class="p-game__menu-dialog-container js-menu-dialog__container">
-            <div class="p-game__menu-dialog">
-                <div class="p-game__button p-game__menu-dialog-button js-game__start-button js-menu-dialog__close-trigger">
+        <div id="id-game__dialog-container" class="p-game__dialog-container p-game__dialog-open">
+            <div class="p-game__dialog">
+                <div
+                    class="p-game__button p-game__menu-dialog-button js-game__start-button js-dialog__close-trigger"
+                    data-dialog-target="id-game__dialog-container"
+                >
                     <strong>start</strong>
                 </div>
+            </div>
+        </div>
+        <div class="p-game__dialog-container p-game__dialog-transparent js-game__element-connect-dialog">
+            <div class="p-game__dialog">
+                <strong class="js-game__element-connect-text"></strong>
             </div>
         </div>
         <div class="p-game__image-container">
