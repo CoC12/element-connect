@@ -2,7 +2,8 @@ import { ElementConnect } from '../components/element-connect.js';
 import { HtmlRenderer } from '../renderer/html-renderer.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    const elementConnect = new ElementConnect();
+    const seed = getSeed();
+    const elementConnect = new ElementConnect(seed);
     const htmlRenderer = new HtmlRenderer(elementConnect);
     htmlRenderer.render()
 
@@ -15,3 +16,16 @@ document.addEventListener('DOMContentLoaded', () => {
         htmlRenderer.stop();
     });
 });
+
+/**
+ * クエリパラメータ「seed」が数値であればそれを、それ以外の場合は Date.now() の値を返す。
+ * @returns {number} シード値
+ */
+const getSeed = () => {
+    const params = new URLSearchParams(window.location.search);
+    const seed = parseInt(params.get('seed'));
+    if (isNaN(seed)) {
+        return Date.now()
+    }
+    return seed;
+};

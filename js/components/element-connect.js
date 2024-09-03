@@ -1,4 +1,5 @@
 import { Config } from '../components/config.js';
+import { SeededRandom } from '../libs/seeded-random.js';
 import { Element, elementKeys, substances } from '../components/element.js';
 import { Direction, Position, isHorizontal } from '../components/position.js';
 import { Board } from '../components/board.js';
@@ -20,8 +21,9 @@ export class ElementConnect {
 
     /**
      * コンストラクタ
+     * @param {number} seed シード値
      */
-    constructor() {
+    constructor(seed) {
         this.stageCols = Config.stageCols;
         this.stageRows = Config.stageRows + Config.additionalRows;
         this.board = new Board(this.stageCols, this.stageRows);
@@ -32,6 +34,8 @@ export class ElementConnect {
         this.tick = 0;
 
         this._score = 0.0;
+
+        this.seededRandom = new SeededRandom(seed);
     }
 
     /**
@@ -143,7 +147,7 @@ export class ElementConnect {
         }
         const nextElementPositions = Config.nextElementPositions;
         nextElementPositions.forEach((position) => {
-            const element = ElementConnect.#choiceElement();
+            const element = this.#choiceElement();
             this.board.setElement(position, element);
             this.fallingElements.add(position);
         });
@@ -246,8 +250,8 @@ export class ElementConnect {
      * Element オブジェクトをランダムに1つ返す。
      * @returns {Element} Element オブジェクト
      */
-    static #choiceElement() {
-        const index = Math.floor(Math.random() * elementKeys.length);
+    #choiceElement() {
+        const index = Math.floor(this.seededRandom.random() * elementKeys.length);
         const key = elementKeys[index];
         return Element[key];
     }
