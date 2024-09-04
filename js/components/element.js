@@ -84,6 +84,13 @@ const substanceData = [
         formula: 'N₂',
     },
     {
+        name: '塩素',
+        pattern: [
+            [Element.CHLORINE, Element.CHLORINE],
+        ],
+        formula: 'Cl₂',
+    },
+    {
         name: '水',
         pattern: [
             [Element.HYDROGEN, null],

@@ -16,8 +16,15 @@ export class Config {
     ];
 
     // game config
-    static tickInterval = 500;
+    static tickInterval = 16;
     static elementConnectInterval = 1000;
+
+    static tickRate = {
+        FALLING_BEFORE: 16,
+        FALLING: 32,
+        CONNECT: 32,
+        SHIFT_DOWN: 0,
+    };
 
     static scorePerTick = 0.35;
     static scorePerMoveDown = 0.45;

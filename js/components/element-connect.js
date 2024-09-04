@@ -31,7 +31,8 @@ export class ElementConnect {
         this._connectedElement = [];
 
         this.state = State.FALLING_BEFORE;
-        this.tick = 0;
+        this._tick = 0;
+        this._currentTick = 0;
 
         this._score = 0.0;
 
@@ -42,16 +43,29 @@ export class ElementConnect {
      * ゲームを 1チック 進める。
      */
     step() {
-        this.tick++;
+        this._tick++;
+        this._currentTick++;
 
         if (this.state === State.FALLING_BEFORE) {
-            this.#onFallingBefore();
+            this.#intervalWrapper(
+                this.#onFallingBefore.bind(this),
+                Config.tickRate.FALLING_BEFORE,
+            );
         } else if (this.state === State.FALLING) {
-            this.#onFalling();
+            this.#intervalWrapper(
+                this.#onFalling.bind(this),
+                Config.tickRate.FALLING,
+            );
         } else if (this.state === State.CONNECT) {
-            this.#onConnect();
+            this.#intervalWrapper(
+                this.#onConnect.bind(this),
+                Config.tickRate.CONNECT,
+            );
         } else if (this.state === State.SHIFT_DOWN) {
-            this.#onShiftDown();
+            this.#intervalWrapper(
+                this.#onShiftDown.bind(this),
+                Config.tickRate.SHIFT_DOWN,
+            );
         }
     }
 
@@ -113,6 +127,7 @@ export class ElementConnect {
         if (this.fallingElements.length === 0) {
             return;
         }
+        this._currentTick = 0;
 
         const positionMapping = this.board.shiftDown();
         this.fallingElements.forEach((position) => {
@@ -244,6 +259,19 @@ export class ElementConnect {
             }
         }
         return false;
+    }
+
+    /**
+     * 指定チックが経過している場合に、指定した関数を実行する。
+     * @param {Function} func 対象の関数
+     * @param {number} tick 実行を待機するチック数
+     */
+    #intervalWrapper(func, tick) {
+        if (this._currentTick < tick) {
+            return;
+        }
+        this._currentTick = 0;
+        func();
     }
 
     /**
